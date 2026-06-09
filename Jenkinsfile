@@ -65,15 +65,14 @@ pipeline {
 
         stage('Deploy to Tomcat') {
             steps {
-            sh '''
-            echo "Workspace is: $WORKSPACE"
-            ls -l $WORKSPACE/target/
+                sh """
+                echo "Workspace is: ${env.WORKSPACE}"
+                ls -l ${env.WORKSPACE}/target/
 
-            docker cp $WORKSPACE/target/maven-web-application.war tomcat:/usr/local/tomcat/webapps/
-            '''
+                docker cp ${env.WORKSPACE}/target/maven-web-application.war tomcat:/usr/local/tomcat/webapps/maven-web-application.war
+                """
             }
         }
-
         stage('Verify Deployment') {
             steps {
                 echo 'Application deployed successfully!'
