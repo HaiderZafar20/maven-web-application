@@ -65,9 +65,12 @@ pipeline {
 
         stage('Deploy to Tomcat') {
             steps {
-                sh '''
-                docker cp target/maven-web-application.war tomcat:/usr/local/tomcat/webapps/
-                '''
+            sh '''
+            echo "Workspace is: $WORKSPACE"
+            ls -l $WORKSPACE/target/
+
+            docker cp $WORKSPACE/target/maven-web-application.war tomcat:/usr/local/tomcat/webapps/
+            '''
             }
         }
 
@@ -90,8 +93,10 @@ pipeline {
             echo 'Pipeline execution failed.'
         }
 
+        /*
         always {
             cleanWs()
         }
+        */
     }
 }
